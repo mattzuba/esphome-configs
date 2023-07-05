@@ -1,0 +1,7 @@
+---
+# Dallas
+#
+# https://esphome.io/components/sensor/dallas.html
+#
+dallas:
+  - pin: 21 #D21

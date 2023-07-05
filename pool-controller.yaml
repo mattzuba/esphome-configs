@@ -1,0 +1,67 @@
+substitutions:
+  system_name: pool-controller
+  friendly_name: Pool Controller
+  device_description: "ESP32 monitoring pool and controlling chlorine"
+
+packages:
+  device: !include devices/esp32doit.yaml
+
+sensor:
+  - platform: dallas
+    address: 0xb63de10457836428
+    name: Pool Temperature
+    filters:
+      - lambda: return x * (9.0/5.0) + 32.0;
+    unit_of_measurement: "°F"
+
+  - platform: bme280
+    temperature:
+      name: "Outdoor Temperature"
+      id: outdoor_temperature
+      filters:
+        - lambda: return x * (9.0/5.0) + 32.0;
+      unit_of_measurement: "°F"
+    pressure:
+      name: "Pressure"
+      id: pressure
+    humidity:
+      name: "Outdoor Humidity"
+      id: outdoor_humidity
+    address: 0x76
+
+  - platform: absolute_humidity
+    name: "Absolute Humidity"
+    temperature: outdoor_temperature
+    humidity: outdoor_humidity
+
+  - platform: template
+    name: "Dew Point"
+    lambda: |-
+      return (243.5*(log(id(outdoor_humidity).state/100)+((17.67*id(outdoor_temperature).state)/
+      (243.5+id(outdoor_temperature).state)))/(17.67-log(id(outdoor_humidity).state/100)-
+      ((17.67*id(outdoor_temperature).state)/(243.5+id(outdoor_temperature).state))));
+    unit_of_measurement: °F
+    icon: 'mdi:thermometer-alert'
+
+binary_sensor:
+  - platform: gpio
+    name: "Chlorine Level"
+    pin:
+      number: D13
+      mode:
+        input: true
+        pullup: true
+    device_class: moisture
+    filters:
+      - delayed_on: 10ms
+
+switch:
+  - platform: gpio
+    name: "Chlorine Dispenser"
+    pin:
+      number: D14
+      inverted: true
+
+output:
+  - platform: gpio
+    pin: D15

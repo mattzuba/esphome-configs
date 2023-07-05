@@ -1,0 +1,7 @@
+---
+# Temperature
+#
+# https://esphome.io/components/sensor/internal_temperature.html
+#
+sensor:
+  - <<: !include ../sensors/internal_temperature.yaml
