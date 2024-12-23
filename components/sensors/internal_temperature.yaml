@@ -4,7 +4,7 @@
 # https://esphome.io/components/sensor/internal_temperature.html
 #
 platform: internal_temperature
-name: "${friendly_name} Internal Temperature"
+name: "Internal Temperature"
 filters:
   - lambda: return x * (9.0/5.0) + 32.0;
 unit_of_measurement: "°F"

@@ -1,7 +1,7 @@
 ---
 # OTA (Over The Air) component
 #
-# Contains my common Wi-Fi setup.
+# Contains my common OTA setup.
 #
 # https://esphome.io/components/ota.html
 #
@@ -9,7 +9,6 @@ substitutions:
   ota_password: !secret ota_password
 
 ota:
+  platform: esphome
   password: "${ota_password}"
-  safe_mode: true
-  reboot_timeout: 10min
-  num_attempts: 5
+  id: updates

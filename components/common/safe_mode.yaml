@@ -1,0 +1,4 @@
+safe_mode:
+  reboot_timeout: 10min
+  num_attempts: 5
+

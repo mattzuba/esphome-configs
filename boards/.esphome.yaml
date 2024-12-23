@@ -8,4 +8,4 @@
 
 name: "esp-${system_name}"
 comment: "${device_description}"
-build_path: "./.build/esph-${system_name}/"
+#build_path: "../.build/esph-${system_name}/"

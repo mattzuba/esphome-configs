@@ -1,0 +1,51 @@
+substitutions:
+  #  Pass these options on the command line with -s
+  system_name: konnected-2
+  friendly_name: Konnected Panel 2
+  device_description: "Konnected Alarm Panel"
+
+esphome:
+  <<: !include ../boards/.esphome.yaml
+  name_add_mac_suffix: false
+
+packages:
+  <<: !include_dir_named ../components/common
+  remote_package:
+    url: https://github.com/konnected-io/konnected-esphome
+    ref: master
+    refresh: 1days
+    files:
+      - packages/alarm-panel-esp8266-base.yaml
+      - packages/alarm-panel/zone1.yaml
+      - packages/alarm-panel/zone2.yaml
+      - packages/alarm-panel/zone3.yaml
+      - packages/alarm-panel/zone4.yaml
+      - packages/alarm-panel/zone5.yaml
+      - packages/alarm-panel/zone6.yaml
+      - packages/warning-beep.yaml
+      - packages/status-led.yaml
+
+binary_sensor:
+  - id: !extend zone1
+    name: Motion Sensor
+    device_class: motion
+
+  - id: !extend zone2
+    name: Bedroom Window
+    device_class: window
+
+  - id: !extend zone3
+    name: Family Room Door
+    device_class: door
+
+  - id: !extend zone4
+    name: Exterior Garage Door
+    device_class: door
+
+  - id: !extend zone5
+    name: Front Door
+    device_class: door
+
+  - id: !extend zone6
+    name: Kitchen Window
+    device_class: window

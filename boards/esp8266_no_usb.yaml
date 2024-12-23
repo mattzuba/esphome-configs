@@ -8,9 +8,14 @@
 #
 esphome:
   <<: !include .esphome.yaml
-  platform: ESP32
+  platform: ESP8266
   friendly_name: "${friendly_name}"
-  board: esp32doit-devkit-v1
+  board: esp01_1m
 
 packages:
   <<: !include_dir_named ../components/common
+
+# Fail safe - no way to flash over USB if something goes wrong
+ota:
+  platform: esphome
+  password: ""

@@ -6,4 +6,4 @@
 # https://esphome.io/components/switch/restart.html#22
 #
 platform: restart
-name: "${friendly_name} Restart"
+name: "Restart"

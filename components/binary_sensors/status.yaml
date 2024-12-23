@@ -6,4 +6,4 @@
 # https://esphome.io/components/binary_sensor/status.html
 #
 platform: status
-name: "${friendly_name} Status"
+name: "Home Assistant Status"

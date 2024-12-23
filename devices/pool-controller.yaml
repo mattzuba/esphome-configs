@@ -4,7 +4,9 @@ substitutions:
   device_description: "ESP32 monitoring pool and controlling chlorine"
 
 packages:
-  device: !include devices/esp32doit.yaml
+  board: !include ../boards/esp32doit.yaml
+  i2c: !include ../components/core/i2c_esp32.yaml
+  dallas: !include ../components/core/dallas.yaml
 
 sensor:
   - platform: dallas
