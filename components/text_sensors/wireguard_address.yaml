@@ -1,0 +1,3 @@
+platform: wireguard
+address:
+  name: 'WireGuard Address'

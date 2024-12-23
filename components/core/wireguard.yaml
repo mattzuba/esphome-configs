@@ -1,0 +1,8 @@
+binary_sensor:
+  - <<: !include ../binary_sensors/wireguard_status.yaml
+
+sensor:
+  - <<: !include ../sensors/wireguard_handshake.yaml
+
+text_sensor:
+  - <<: !include ../text_sensors/wireguard_address.yaml

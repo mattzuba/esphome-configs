@@ -1,0 +1,3 @@
+platform: wireguard
+latest_handshake:
+  name: 'WireGuard Latest Handshake'

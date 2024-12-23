@@ -1,0 +1,2 @@
+http_request:
+  useragent: esphome/${system_name}

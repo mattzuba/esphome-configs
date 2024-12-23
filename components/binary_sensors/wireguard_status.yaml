@@ -1,0 +1,5 @@
+platform: wireguard
+status:
+  id: wg_status
+  name: 'WireGuard Status'
+  entity_category: diagnostic
