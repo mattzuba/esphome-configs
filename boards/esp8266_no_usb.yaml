@@ -11,6 +11,9 @@ esphome:
   platform: ESP8266
   friendly_name: "${friendly_name}"
   board: esp01_1m
+  project:
+    name: "zuba.${system_name}"
+    version: "${version}"
 
 packages:
   <<: !include_dir_named ../components/common

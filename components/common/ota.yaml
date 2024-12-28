@@ -9,6 +9,39 @@ substitutions:
   ota_password: !secret ota_password
 
 ota:
-  platform: esphome
-  password: "${ota_password}"
-  id: updates
+  - platform: esphome
+    password: "${ota_password}"
+
+  - platform: http_request
+    on_begin:
+      then:
+        #      - deep_sleep.prevent: sleeper
+        - http_request.post:
+            url: https://ntfy.zuba.dev/esp-updates
+            headers:
+              Authorization: !secret ntfy_token
+            body: !lambda |-
+              char buffer[256]; // Adjust buffer size if needed
+              snprintf(buffer, sizeof(buffer), "OTA update is starting for %s", App.get_name().c_str());
+              return std::string(buffer);
+    on_end:
+      then:
+        - http_request.post:
+            url: https://ntfy.zuba.dev/esp-updates
+            headers:
+              Authorization: !secret ntfy_token
+            body: !lambda |-
+              char buffer[256]; // Adjust buffer size if needed
+              snprintf(buffer, sizeof(buffer), "OTA update is complete for %s", App.get_name().c_str());
+              return std::string(buffer);
+    on_error:
+      then:
+        #      - deep_sleep.allow: sleeper
+        - http_request.post:
+            url: https://ntfy.zuba.dev/esp-updates
+            headers:
+              Authorization: !secret ntfy_token
+            body: !lambda |-
+              char buffer[256]; // Adjust buffer size if needed
+              snprintf(buffer, sizeof(buffer), "OTA update had an error for %s", App.get_name().c_str());
+              return std::string(buffer);

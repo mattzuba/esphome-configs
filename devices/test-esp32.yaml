@@ -1,0 +1,11 @@
+substitutions:
+  system_name: test-esp32
+  friendly_name: Test Board
+  device_description: "Test board for playing with configs"
+  manifest: https://esp.zuba.dev/firmware/manifest.json
+
+packages:
+  board: !include ../boards/esp32doit.yaml
+  web: !include ../components/core/web_server.yaml
+  http: !include ../components/core/http_request.yaml
+  update: !include ../components/core/update.yaml

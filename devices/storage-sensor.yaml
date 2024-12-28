@@ -12,41 +12,10 @@ packages:
   wireguard: !include ../components/core/wireguard.yaml
   web: !include ../components/core/web_server.yaml
   http: !include ../components/core/http_request.yaml
-  ota_http: !include ../components/core/ota_http.yaml
+  update: !include ../components/core/update.yaml
 
 wifi:
   use_address: $address
-
-ota:
-  on_begin:
-    then:
-#      - deep_sleep.prevent: sleeper
-      - http_request.post:
-          url: https://ntfy.zuba.dev/esp-updates
-          verify_ssl: false
-          headers:
-            Authorization: !secret ntfy_token
-          body: "OTA update is starting for storage-sensor"
-  on_end:
-    then:
-      - http_request.post:
-          url: https://ntfy.zuba.dev/esp-updates
-          verify_ssl: false
-          headers:
-            Authorization: !secret ntfy_token
-          body: "OTA update is complete for storage-sensor"
-      - http_request.get:
-          url: https://esp.zuba.dev/complete/storage-sensor.bin
-          verify_ssl: false
-  on_error:
-    then:
-#      - deep_sleep.allow: sleeper
-      - http_request.post:
-          url: https://ntfy.zuba.dev/esp-updates
-          verify_ssl: false
-          headers:
-            Authorization: !secret ntfy_token
-          body: "Update had an error for storage-sensor"
 
 #deep_sleep:
 #  id: sleeper
@@ -76,26 +45,6 @@ light:
     pin: $status_pin
 
 interval:
-  - interval: 10s
-    then:
-      if:
-        condition:
-          binary_sensor.is_on: wg_status
-        then:
-          - http_request.send:
-              method: HEAD
-              url: https://esp.zuba.dev/firmware/storage-sensor.bin
-              verify_ssl: false
-              on_response:
-                then:
-                  - logger.log:
-                      format: "Response status: %d"
-                      args:
-                        - status_code
-
-#          - ota_http.flash:
-#              url: https://esp.zuba.dev/firmware/storage-sensor.bin
-#              verify_ssl: false
   - interval: 1s
     then:
       if:

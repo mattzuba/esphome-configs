@@ -11,6 +11,9 @@ esphome:
   platform: ESP32
   friendly_name: "${friendly_name}"
   board: esp32doit-devkit-v1
+  project:
+    name: "zuba.${system_name}"
+    version: "${version}"
 
 packages:
   <<: !include_dir_named ../components/common

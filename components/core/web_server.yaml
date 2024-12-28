@@ -12,6 +12,7 @@
 web_server:
   port: 80
   ota: false
+  version: 3
   auth:
     username: admin
     password: !secret web_pass

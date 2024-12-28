@@ -1,0 +1,22 @@
+---
+# Update (Over The Air) component
+#
+# Contains my common Update setup.
+#
+# https://esphome.io/components/update.html
+#
+update:
+  - platform: http_request
+    id: updater
+    name: Firmware Update
+    source: "${manifest}"
+    update_interval: 1min
+
+interval:
+  - interval: 1min
+    then:
+      if:
+        condition:
+          update.is_available
+        then:
+          - update.perform: updater
